@@ -1,7 +1,7 @@
 [project]
-name = "socratic-thinking-mcp"
+name = "innovation-socratic-mcp"
 version = "2.0.0"
-description = "Socratic Thinking MCP - AI that asks, not answers. 58 question frameworks for strategic thinking, decision-making, and creative problem-solving."
+description = "Innovation Socratic MCP - AI that asks, not answers. 58 question frameworks for strategic thinking, decision-making, and creative problem-solving."
 authors = [{name = "Sean Shin", email = "sean@geri.global"}]
 readme = "README.md"
 license = {text = "MIT"}
@@ -38,10 +38,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/socratic-thinking-mcp"
-Repository = "https://github.com/yourusername/socratic-thinking-mcp"
-Documentation = "https://github.com/yourusername/socratic-thinking-mcp#readme"
-"Bug Tracker" = "https://github.com/yourusername/socratic-thinking-mcp/issues"
+Homepage = "https://github.com/yourusername/innovation-socratic-mcp"
+Repository = "https://github.com/yourusername/innovation-socratic-mcp"
+Documentation = "https://github.com/yourusername/innovation-socratic-mcp#readme"
+"Bug Tracker" = "https://github.com/yourusername/innovation-socratic-mcp/issues"
 
 [project.optional-dependencies]
 dev = [

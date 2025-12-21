@@ -1,4 +1,4 @@
-# 🤔 Socratic Thinking MCP
+# 🤔 Innovation Socratic MCP
 
 > **AI that asks, not answers** | 질문하는 AI, 소크라테스처럼
 
@@ -16,7 +16,7 @@ Like Socrates, it guides you to discover insights through structured questioning
 
 ## ✨ What Makes This Different
 
-| Traditional AI | Socratic Thinking MCP |
+| Traditional AI | Innovation Socratic MCP |
 |---------------|---------------------|
 | ✅ Gives instant answers | ❓ Asks guiding questions |
 | 🤖 AI does the thinking | 🧠 You do the thinking |
@@ -50,7 +50,7 @@ Perfect for RAG (Retrieval-Augmented Generation) integration!
 
 1. **Install dependencies**:
 ```bash
-cd socratic-thinking-mcp
+cd innovation-socratic-mcp
 pip install -r requirements.txt
 ```
 
@@ -61,9 +61,9 @@ pip install -r requirements.txt
     "socratic-thinking": {
       "command": "python",
       "args": ["-m", "src.server"],
-      "cwd": "C:\\\\Users\\\\YourName\\\\Documents\\\\socratic-thinking-mcp",
+      "cwd": "C:\\\\Users\\\\YourName\\\\Documents\\\\innovation-socratic-mcp",
       "env": {
-        "PYTHONPATH": "C:\\\\Users\\\\YourName\\\\Documents\\\\socratic-thinking-mcp"
+        "PYTHONPATH": "C:\\\\Users\\\\YourName\\\\Documents\\\\innovation-socratic-mcp"
       }
     }
   }
@@ -79,7 +79,7 @@ Just ask Claude naturally - the MCP activates automatically:
 ```
 You: "Should I pursue an MBA or start a business?"
 
-Claude: [Activates Socratic Thinking MCP]
+Claude: [Activates Innovation Socratic MCP]
 
 🎯 Problem analyzed
 Category: Strategic decision-making
@@ -222,7 +222,7 @@ Final insight: 50+ questions reframing the problem from multiple angles
 ## 🏗️ Architecture
 
 ```
-socratic-thinking-mcp/
+innovation-socratic-mcp/
 ├── src/
 │   ├── server.py              # MCP server (tool registration)
 │   ├── classifier.py          # Problem categorization
@@ -252,7 +252,7 @@ socratic-thinking-mcp/
 
 ## 📊 Comparison with Other Tools
 
-| Feature | Socratic Thinking MCP | Sequential Thinking | ChatGPT |
+| Feature | Innovation Socratic MCP | Sequential Thinking | ChatGPT |
 |---------|---------------------|-------------------|---------| 
 | Question-based | ✅ 78+ structured frameworks | ✅ General reasoning | ❌ Answer-based |
 | Business Strategy | ✅ SWOT, BCG, Porter, Canvas | ❌ | ⚠️ Limited |

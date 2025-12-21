@@ -1,0 +1,137 @@
+{
+  "version": "2.0.0",
+  "updated": "2025-12-21",
+  "total_methods": 48,
+  "categories": {
+    "creativity": "창의적 사고",
+    "analysis": "분석/논리 사고",
+    "decision_making": "의사결정",
+    "innovation": "혁신/디자인",
+    "business_strategy": "비즈니스 전략",
+    "intuitive": "직관적 사고"
+  },
+  "methods": [
+    {
+      "id": "01-question-storming",
+      "file": "01-Question-Storming.md",
+      "title": "Question Storming",
+      "title_ko": "질문 폭풍",
+      "category": "creativity",
+      "use_when": ["브레인스토밍", "문제 탐구", "새로운 관점 필요"]
+    },
+    {
+      "id": "02-kipling-method",
+      "file": "02-Kipling-Method.md",
+      "title": "Kipling Method (5W1H)",
+      "title_ko": "키플링 메서드",
+      "category": "analysis",
+      "use_when": ["상황 파악", "체계적 분석", "육하원칙"]
+    },
+    {
+      "id": "03-appreciative-inquiry",
+      "file": "03-Appreciative-Inquiry.md",
+      "title": "Appreciative Inquiry",
+      "title_ko": "긍정 탐구",
+      "category": "business_strategy",
+      "use_when": ["조직 변화", "강점 기반 접근", "긍정적 변화"]
+    },
+    {
+      "id": "04-socratic-questioning",
+      "file": "04-Socratic-Questioning.md",
+      "title": "Socratic Questioning",
+      "title_ko": "소크라테스 질문법",
+      "category": "analysis",
+      "use_when": ["깊은 사고", "가정 검증", "논리 검토"]
+    },
+    {
+      "id": "21-false-faces",
+      "file": "21-False-Faces-Reversal.md",
+      "title": "False Faces (Reversal)",
+      "title_ko": "역발상 기법",
+      "category": "creativity",
+      "use_when": ["고정관념 탈피", "새로운 관점", "혁신적 아이디어"]
+    },
+    {
+      "id": "25-scamper",
+      "file": "25-SCAMPER.md",
+      "title": "SCAMPER",
+      "title_ko": "스캠퍼",
+      "category": "creativity",
+      "use_when": ["제품 개선", "아이디어 발상", "체계적 변형"]
+    },
+    {
+      "id": "41-okr",
+      "file": "41-OKR.md",
+      "title": "OKR (Objectives and Key Results)",
+      "title_ko": "목표와 핵심결과",
+      "category": "business_strategy",
+      "use_when": ["목표 설정", "분기 계획", "조직 정렬", "성과 관리"]
+    },
+    {
+      "id": "42-agile",
+      "file": "42-Agile-Framework.md",
+      "title": "Agile Framework",
+      "title_ko": "애자일 프레임워크",
+      "category": "business_strategy",
+      "use_when": ["프로젝트 관리", "반복 개발", "팀 협업", "스프린트"]
+    },
+    {
+      "id": "43-kpi",
+      "file": "43-KPI-Metrics.md",
+      "title": "KPI & Metrics",
+      "title_ko": "핵심성과지표",
+      "category": "business_strategy",
+      "use_when": ["성과 측정", "지표 설계", "대시보드"]
+    },
+    {
+      "id": "44-design-thinking",
+      "file": "44-Design-Thinking.md",
+      "title": "Design Thinking",
+      "title_ko": "디자인 씽킹",
+      "category": "innovation",
+      "use_when": ["신제품 개발", "사용자 경험", "혁신 프로젝트"]
+    },
+    {
+      "id": "45-jtbd",
+      "file": "45-Jobs-to-be-Done.md",
+      "title": "Jobs to be Done",
+      "title_ko": "할일이론",
+      "category": "innovation",
+      "use_when": ["고객 니즈 발굴", "경쟁 분석", "시장 세분화"]
+    },
+    {
+      "id": "46-vpc",
+      "file": "46-Value-Proposition-Canvas.md",
+      "title": "Value Proposition Canvas",
+      "title_ko": "가치제안 캔버스",
+      "category": "business_strategy",
+      "use_when": ["PMF 검증", "가치 제안", "고객 이해"]
+    },
+    {
+      "id": "47-lean-canvas",
+      "file": "47-Lean-Canvas.md",
+      "title": "Lean Canvas",
+      "title_ko": "린 캔버스",
+      "category": "business_strategy",
+      "use_when": ["스타트업", "비즈니스 모델", "가설 검증"]
+    },
+    {
+      "id": "48-pre-mortem",
+      "file": "48-Pre-Mortem.md",
+      "title": "Pre-Mortem Analysis",
+      "title_ko": "사전부검",
+      "category": "decision_making",
+      "use_when": ["리스크 분석", "프로젝트 시작", "실패 예방"]
+    }
+  ],
+  "search_hints": {
+    "목표 설정": ["41-okr", "43-kpi"],
+    "프로젝트 관리": ["42-agile", "48-pre-mortem"],
+    "아이디어 발상": ["25-scamper", "21-false-faces", "01-question-storming"],
+    "고객 이해": ["44-design-thinking", "45-jtbd", "46-vpc"],
+    "비즈니스 모델": ["47-lean-canvas", "46-vpc"],
+    "문제 분석": ["04-socratic-questioning", "02-kipling-method"],
+    "의사결정": ["48-pre-mortem", "decision_tree", "regret_minimization"],
+    "창의적 막힘": ["31-chilling-out", "30-brutethink", "33-three-bs"]
+  }
+}

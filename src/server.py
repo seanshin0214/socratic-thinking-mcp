@@ -1,5 +1,5 @@
 """
-Socratic Thinking MCP Server
+Innovation Socratic MCP Server
 AI that asks, not answers - Socratic questioning with 58 methodologies
 """
 
@@ -19,7 +19,7 @@ from .rag import rag_engine
 
 
 # MCP 서버 생성
-server = Server("socratic-thinking-mcp")
+server = Server("innovation-socratic-mcp")
 
 
 @server.list_tools()
@@ -29,7 +29,7 @@ async def handle_list_tools() -> list[types.Tool]:
     """
     return [
         types.Tool(
-            name="socratic_thinking",
+            name="innovation_socratic",
             description="🤔 SOCRATIC THINKING - AI that asks, not answers. ⚠️ MANDATORY when user says: '씽킹툴', 'socratic', 'thinking tools', '소크라테스', 'help me think'. 🎯 Implements 58 proven question frameworks (Decision Tree, SWOT, BCG, Porter, SCAMPER, 5 Whys, Six Hats, Mental Models, Pre-Mortem, Systems Thinking, Regret Minimization, etc.). ❌ DO NOT give direct answers to strategic/decision questions - ✅ ALWAYS use this tool to guide through Socratic questioning. Perfect for: DBA decisions, MBA choices, investment evaluation, business strategy, product innovation, problem-solving, creative thinking, 의사결정, 전략분석. Flow: 1) Analyze problem → 2) Recommend 3 methodologies → 3) User selects → 4) Ask Question 1/N → 5) User answers → 6) Ask Question 2/N → ... → N) Generate insights. Like Socrates: 'I cannot teach anybody anything. I can only make them think.'",
             inputSchema={
                 "type": "object",
@@ -93,7 +93,7 @@ async def handle_call_tool(
     """
     도구 실행 핸들러
     """
-    if name == "socratic_thinking":
+    if name == "innovation_socratic":
         problem = arguments.get("problem", "")
         method = arguments.get("method", "")
         return await start_thinking_session(problem, method)
@@ -174,7 +174,7 @@ async def select_method(method_number: int) -> list[types.TextContent]:
     if not detector.current_session:
         return [types.TextContent(
             type="text",
-            text="❌ 활성화된 세션이 없습니다. 먼저 socratic_thinking을 사용하세요."
+            text="❌ 활성화된 세션이 없습니다. 먼저 innovation_socratic을 사용하세요."
         )]
 
     classification = detector.current_session["classification"]
@@ -262,7 +262,7 @@ async def main():
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="socratic-thinking-mcp",
+                server_name="innovation-socratic-mcp",
                 server_version="2.0.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),

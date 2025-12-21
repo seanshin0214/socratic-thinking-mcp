@@ -742,3 +742,92 @@ CATEGORY_MAP = {
         "regret_minimization", "opportunity_cost", "mental_models"
     ]
 }
+
+# PRIMARY METHOD - Question Storming (Always recommended first)
+PRIMARY_METHODS = {
+    "question_storming": {
+        "name": "QUESTION STORMING (40 Questions)",
+        "category": "primary",
+        "steps": 40,
+        "best_for": "deep_exploration",
+        "priority": 1,
+        "questions": [
+            # DESCRIPTIVE (20)
+            "📋 [Descriptive 1/20] 현재 상황을 가장 정확하게 설명한다면?",
+            "📋 [Descriptive 2/20] 이 문제의 핵심 요소들은 무엇입니까?",
+            "📋 [Descriptive 3/20] 이 상황이 발생한 배경은 무엇입니까?",
+            "📋 [Descriptive 4/20] 관련된 이해관계자는 누구입니까?",
+            "📋 [Descriptive 5/20] 현재 사용 가능한 자원은 무엇입니까?",
+            "📋 [Descriptive 6/20] 어떤 제약 조건이 존재합니까?",
+            "📋 [Descriptive 7/20] 이 문제의 역사적 맥락은 무엇입니까?",
+            "📋 [Descriptive 8/20] 비슷한 상황에서 다른 사람들은 어떻게 했습니까?",
+            "📋 [Descriptive 9/20] 현재 시도된 해결책은 무엇입니까?",
+            "📋 [Descriptive 10/20] 그 해결책들이 왜 충분하지 않았습니까?",
+            "📋 [Descriptive 11/20] 이 문제로 인한 직접적 영향은 무엇입니까?",
+            "📋 [Descriptive 12/20] 간접적/2차적 영향은 무엇입니까?",
+            "📋 [Descriptive 13/20] 성공의 기준은 무엇입니까?",
+            "📋 [Descriptive 14/20] 실패의 기준은 무엇입니까?",
+            "📋 [Descriptive 15/20] 시간적 제약은 무엇입니까?",
+            "📋 [Descriptive 16/20] 예산/비용 제약은 무엇입니까?",
+            "📋 [Descriptive 17/20] 기술적 제약은 무엇입니까?",
+            "📋 [Descriptive 18/20] 조직/문화적 제약은 무엇입니까?",
+            "📋 [Descriptive 19/20] 데이터/정보 격차는 무엇입니까?",
+            "📋 [Descriptive 20/20] 현재 상황을 한 문장으로 요약한다면?",
+            # DISRUPTIVE (20)
+            "💥 [Disruptive 1/20] 이 문제가 사실 문제가 아니라면?",
+            "💥 [Disruptive 2/20] 정반대 접근법을 취한다면 어떻게 될까?",
+            "💥 [Disruptive 3/20] 모든 제약이 사라진다면 무엇을 하겠습니까?",
+            "💥 [Disruptive 4/20] 10배 더 크게 생각한다면?",
+            "💥 [Disruptive 5/20] 10배 더 작게 생각한다면?",
+            "💥 [Disruptive 6/20] 완전히 다른 산업에서 이 문제를 본다면?",
+            "💥 [Disruptive 7/20] 5살 아이가 이 문제를 본다면 뭐라고 할까?",
+            "💥 [Disruptive 8/20] 경쟁자가 우리보다 먼저 해결한다면?",
+            "💥 [Disruptive 9/20] 이 문제를 해결하지 않으면 5년 후 어떻게 될까?",
+            "💥 [Disruptive 10/20] 가장 두려운 시나리오는 무엇입니까?",
+            "💥 [Disruptive 11/20] 당연하다고 생각하는 것 중 틀린 것은?",
+            "💥 [Disruptive 12/20] 우리가 피하고 있는 질문은 무엇입니까?",
+            "💥 [Disruptive 13/20] 만약 실패가 옵션이 아니라면?",
+            "💥 [Disruptive 14/20] 만약 실패가 유일한 옵션이라면?",
+            "💥 [Disruptive 15/20] 가장 미친 아이디어는 무엇입니까?",
+            "💥 [Disruptive 16/20] 규칙을 어길 수 있다면 어떤 규칙을 어기겠습니까?",
+            "💥 [Disruptive 17/20] 완전히 새로운 시장을 만든다면?",
+            "💥 [Disruptive 18/20] AI/기술이 모든 것을 해결한다면?",
+            "💥 [Disruptive 19/20] 10년 후 미래에서 이 문제를 본다면?",
+            "💥 [Disruptive 20/20] 지금까지의 모든 답변을 종합하면 새로운 통찰은?"
+        ]
+    },
+    "socratic_questioning": {
+        "name": "SOCRATIC QUESTIONING (6 Types)",
+        "category": "critical",
+        "steps": 12,
+        "best_for": "deep_thinking",
+        "priority": 2,
+        "questions": [
+            "🔍 [명확화 1/2] 무슨 의미입니까? 더 구체적으로 설명해 주시겠습니까?",
+            "🔍 [명확화 2/2] 예시를 들어 주시겠습니까?",
+            "🎯 [가정탐색 1/2] 어떤 가정에 기반하고 있습니까?",
+            "🎯 [가정탐색 2/2] 그 가정이 틀렸다면 어떻게 됩니까?",
+            "📊 [근거탐색 1/2] 그것을 뒷받침하는 증거는 무엇입니까?",
+            "📊 [근거탐색 2/2] 어떻게 그것이 사실이라고 알 수 있습니까?",
+            "👁️ [관점탐색 1/2] 다른 사람은 어떻게 생각할까요?",
+            "👁️ [관점탐색 2/2] 반대 관점에서 보면 어떻습니까?",
+            "🔗 [함의탐색 1/2] 그것이 사실이라면 어떤 결과가 따릅니까?",
+            "🔗 [함의탐색 2/2] 이것이 다른 것에 어떤 영향을 미칩니까?",
+            "❓ [메타질문 1/2] 왜 이 질문이 중요합니까?",
+            "❓ [메타질문 2/2] 우리가 묻지 않은 더 중요한 질문이 있습니까?"
+        ]
+    }
+}
+
+# Update ALL_METHODS to include PRIMARY_METHODS first
+ALL_METHODS = {
+    **PRIMARY_METHODS,
+    **LINEAR_METHODS,
+    **INTUITIVE_METHODS,
+    **PERSPECTIVE_METHODS,
+    **FEEDBACK_METHODS,
+    **STRATEGIC_METHODS
+}
+
+# Update CATEGORY_MAP
+CATEGORY_MAP["primary"] = ["question_storming", "socratic_questioning"]

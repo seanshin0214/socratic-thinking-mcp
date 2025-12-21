@@ -1,194 +1,192 @@
 """
 RAG (Retrieval-Augmented Generation) Integration
-사용자 업로드 문서 분석 및 질문 생성
+ChromaDB 기반 벡터 검색으로 사고 방법론 추천
 """
 
+import os
+import yaml
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 
+try:
+    import chromadb
+    from chromadb.utils import embedding_functions
+    CHROMADB_AVAILABLE = True
+except ImportError:
+    CHROMADB_AVAILABLE = False
+
 
 class RAGEngine:
-    """
-    RAG 엔진 (간단한 버전)
-    실제 구현에서는 벡터 DB (Chroma, Pinecone 등) 사용 권장
-    """
-
-    def __init__(self):
-        self.documents: Dict[str, str] = {}  # {doc_id: content}
+    def __init__(self, knowledge_path: Optional[str] = None):
+        self.knowledge_path = knowledge_path or self._find_knowledge_path()
+        self.collection = None
+        self.client = None
         self.indexed = False
+        self.documents: Dict[str, str] = {}
 
-    def add_document(
-        self,
-        doc_id: str,
-        content: str,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> bool:
-        """
-        문서 추가
+        if CHROMADB_AVAILABLE:
+            self._initialize_chromadb()
 
-        Args:
-            doc_id: 문서 ID
-            content: 문서 내용
-            metadata: 메타데이터 (선택사항)
+    def _find_knowledge_path(self) -> str:
+        current_dir = Path(__file__).parent.parent
+        knowledge_dir = current_dir / "knowledge"
+        if knowledge_dir.exists():
+            return str(knowledge_dir)
+        env_path = os.environ.get("SOCRATIC_KNOWLEDGE_PATH")
+        if env_path and Path(env_path).exists():
+            return env_path
+        return str(knowledge_dir)
 
-        Returns:
-            성공 여부
-        """
+    def _initialize_chromadb(self):
         try:
-            self.documents[doc_id] = content
-            self.indexed = False  # 재색인 필요
-            return True
+            persist_dir = Path(self.knowledge_path).parent / ".chromadb"
+            persist_dir.mkdir(exist_ok=True)
+            self.client = chromadb.PersistentClient(path=str(persist_dir))
+            self.embedding_fn = embedding_functions.SentenceTransformerEmbeddingFunction(
+                model_name="paraphrase-multilingual-MiniLM-L12-v2"
+            )
+            self.collection = self.client.get_or_create_collection(
+                name="socratic_methods",
+                embedding_function=self.embedding_fn
+            )
+            if self.collection.count() > 0:
+                self.indexed = True
         except Exception as e:
-            print(f"문서 추가 실패: {e}")
-            return False
+            print(f"ChromaDB error: {e}")
+            self.collection = None
 
-    def load_pdf(self, pdf_path: str) -> bool:
-        """
-        PDF 파일 로드
-
-        실제 구현에서는 PyPDF2, pdfplumber 등 사용
-        여기서는 placeholder
-        """
-        # TODO: PDF 파싱 구현
-        # from PyPDF2 import PdfReader
-        # reader = PdfReader(pdf_path)
-        # content = ""
-        # for page in reader.pages:
-        #     content += page.extract_text()
-
-        doc_id = Path(pdf_path).stem
-        # self.add_document(doc_id, content)
-
-        return True
-
-    def query_relevant_chunks(
-        self,
-        query: str,
-        top_k: int = 3
-    ) -> List[Dict[str, Any]]:
-        """
-        쿼리와 관련된 문서 청크 검색
-
-        Args:
-            query: 검색 쿼리
-            top_k: 상위 K개 결과
-
-        Returns:
-            관련 청크 리스트
-        """
-        # 간단한 키워드 매칭 (실제로는 벡터 유사도 검색)
-        results = []
-
-        query_lower = query.lower()
-
-        for doc_id, content in self.documents.items():
-            # 청크로 분할 (문단 단위)
-            chunks = content.split('\n\n')
-
-            for i, chunk in enumerate(chunks):
-                if not chunk.strip():
-                    continue
-
-                # 간단한 점수 계산 (키워드 매칭)
-                score = sum(1 for word in query_lower.split() if word in chunk.lower())
-
-                if score > 0:
-                    results.append({
-                        "doc_id": doc_id,
-                        "chunk_id": i,
-                        "content": chunk,
-                        "score": score
-                    })
-
-        # 점수 순 정렬
-        results.sort(key=lambda x: x["score"], reverse=True)
-
-        return results[:top_k]
-
-    def generate_context_questions(
-        self,
-        method_id: str,
-        document_chunks: List[Dict[str, Any]]
-    ) -> List[str]:
-        """
-        문서 컨텍스트 기반 맞춤 질문 생성
-
-        Args:
-            method_id: 방법론 ID
-            document_chunks: 관련 문서 청크
-
-        Returns:
-            맞춤 질문 리스트
-        """
-        # 문서 내용 요약
-        context_summary = " ".join([
-            chunk["content"][:100] for chunk in document_chunks
-        ])
-
-        # 방법론별 맞춤 질문 생성
-        # 실제로는 LLM을 사용하여 생성
-        # 여기서는 간단한 템플릿 사용
-
-        questions = []
-
-        if method_id == "scamper":
-            questions.append(f"문서에서 언급된 요소 중 무엇을 대체할 수 있습니까?")
-            questions.append(f"문서의 개념들을 어떻게 결합할 수 있습니까?")
-
-        elif method_id == "five_whys":
-            questions.append(f"문서에서 식별된 문제는 왜 발생합니까?")
-
-        elif method_id == "six_hats":
-            questions.append(f"문서의 사실적 데이터는 무엇입니까? (White Hat)")
-
-        # 기본 질문
-        questions.append(f"문서의 핵심 개념을 {method_id} 방법론으로 어떻게 분석할 수 있습니까?")
-
-        return questions
-
-    def analyze_document_with_method(
-        self,
-        doc_id: str,
-        method_id: str,
-        problem_context: Optional[str] = None
-    ) -> Dict[str, Any]:
-        """
-        문서를 특정 방법론으로 분석
-
-        Args:
-            doc_id: 문서 ID
-            method_id: 방법론 ID
-            problem_context: 문제 컨텍스트
-
-        Returns:
-            분석 결과
-        """
-        if doc_id not in self.documents:
-            return {"error": f"문서를 찾을 수 없습니다: {doc_id}"}
-
-        # 관련 청크 검색
-        query = problem_context if problem_context else method_id
-        chunks = self.query_relevant_chunks(query, top_k=5)
-
-        # 맞춤 질문 생성
-        questions = self.generate_context_questions(method_id, chunks)
-
+    def _parse_markdown_file(self, file_path: Path) -> Dict[str, Any]:
+        content = file_path.read_text(encoding='utf-8')
+        metadata = {}
+        body = content
+        if content.startswith('---'):
+            parts = content.split('---', 2)
+            if len(parts) >= 3:
+                try:
+                    metadata = yaml.safe_load(parts[1]) or {}
+                except:
+                    pass
+                body = parts[2].strip()
         return {
-            "doc_id": doc_id,
-            "method": method_id,
-            "relevant_chunks": len(chunks),
-            "custom_questions": questions,
-            "chunks_preview": [
-                {"content": c["content"][:200] + "...", "score": c["score"]}
-                for c in chunks[:3]
-            ]
+            "id": metadata.get("id", file_path.stem),
+            "file": file_path.name,
+            "title": metadata.get("title", file_path.stem),
+            "aliases": metadata.get("aliases", []),
+            "category": metadata.get("category", "general"),
+            "use_cases": metadata.get("use_cases", []),
+            "keywords": metadata.get("keywords", []),
+            "body": body
         }
 
+    def _create_searchable_text(self, doc: Dict[str, Any]) -> str:
+        parts = [doc["title"], " ".join(doc.get("aliases", [])),
+                 " ".join(doc.get("keywords", [])), " ".join(doc.get("use_cases", [])),
+                 doc.get("body", "")[:2000]]
+        return " ".join(filter(None, parts))
+
+    def index_knowledge(self, force: bool = False) -> Dict[str, Any]:
+        if not CHROMADB_AVAILABLE or not self.collection:
+            return {"success": False, "error": "ChromaDB not available"}
+
+        if force and self.collection.count() > 0:
+            ids = self.collection.get()["ids"]
+            if ids:
+                self.collection.delete(ids=ids)
+
+        knowledge_path = Path(self.knowledge_path)
+        md_files = [f for f in sorted(knowledge_path.glob("*.md"))
+                    if not f.name.startswith("_") and f.name != "README.md"]
+
+        indexed = 0
+        for f in md_files:
+            try:
+                doc = self._parse_markdown_file(f)
+                self.collection.add(
+                    ids=[doc["id"]], documents=[self._create_searchable_text(doc)],
+                    metadatas=[{"file": doc["file"], "title": doc["title"],
+                               "category": doc["category"],
+                               "use_cases": ", ".join(doc.get("use_cases", []))}]
+                )
+                indexed += 1
+            except Exception as e:
+                print(f"Index error {f.name}: {e}")
+
+        self.indexed = True
+        return {"success": True, "indexed": indexed, "total": len(md_files)}
+
+    def search(self, query: str, n_results: int = 5) -> List[Dict[str, Any]]:
+        if not CHROMADB_AVAILABLE or not self.collection:
+            return self._fallback_search(query, n_results)
+
+        if not self.indexed:
+            self.index_knowledge()
+
+        try:
+            results = self.collection.query(query_texts=[query], n_results=n_results)
+            formatted = []
+            if results["ids"] and results["ids"][0]:
+                for i, id in enumerate(results["ids"][0]):
+                    meta = results["metadatas"][0][i] if results["metadatas"] else {}
+                    dist = results["distances"][0][i] if results.get("distances") else 0
+                    formatted.append({
+                        "id": id, "title": meta.get("title", id),
+                        "file": meta.get("file", ""), "category": meta.get("category", ""),
+                        "relevance_score": round(1 - dist, 3),
+                        "use_cases": meta.get("use_cases", "")
+                    })
+            return formatted
+        except Exception as e:
+            return self._fallback_search(query, n_results)
+
+    def _fallback_search(self, query: str, n_results: int = 5) -> List[Dict[str, Any]]:
+        knowledge_path = Path(self.knowledge_path)
+        if not knowledge_path.exists():
+            return []
+        query_words = set(query.lower().split())
+        results = []
+        for f in knowledge_path.glob("*.md"):
+            if f.name.startswith("_") or f.name == "README.md":
+                continue
+            try:
+                doc = self._parse_markdown_file(f)
+                text = self._create_searchable_text(doc).lower()
+                score = sum(1 for w in query_words if w in text)
+                if score > 0:
+                    results.append({"id": doc["id"], "title": doc["title"],
+                                   "relevance_score": score / len(query_words)})
+            except:
+                continue
+        results.sort(key=lambda x: x["relevance_score"], reverse=True)
+        return results[:n_results]
+
+    def get_stats(self) -> Dict[str, Any]:
+        stats = {"chromadb": CHROMADB_AVAILABLE, "indexed": self.indexed}
+        if self.collection:
+            stats["docs"] = self.collection.count()
+        return stats
+
+    # 하위 호환
+    def add_document(self, doc_id: str, content: str, metadata=None) -> bool:
+        self.documents[doc_id] = content
+        return True
+
+    def query_relevant_chunks(self, query: str, top_k: int = 3):
+        return self.search(query, n_results=top_k)
+
+    def generate_context_questions(self, method_id: str, chunks) -> List[str]:
+        return [f"'{method_id}' 방법론으로 분석하세요"]
+
     def clear_documents(self):
-        """모든 문서 삭제"""
         self.documents.clear()
-        self.indexed = False
 
 
-# 싱글톤 인스턴스
 rag_engine = RAGEngine()
+
+if __name__ == "__main__":
+    import sys
+    print("Socratic RAG Engine (ChromaDB)")
+    print(f"Stats: {rag_engine.get_stats()}")
+    if "--index" in sys.argv:
+        print(rag_engine.index_knowledge(force="--force" in sys.argv))
+    for q in ["목표 설정", "아이디어 발상"]:
+        print(f"\n'{q}':", [r["title"] for r in rag_engine.search(q, 3)])
